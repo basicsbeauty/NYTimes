@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.enlaps.m.and.nytimes.models.NewsArticle;
 import com.enlaps.m.and.nytimes.R;
 
@@ -48,6 +49,9 @@ public class ArticleItemAdapter extends ArrayAdapter<NewsArticle> {
         else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.tvTitle.setText(article.title);
+        Glide.with(getContext()).load(article.thumbnail_url).into(viewHolder.ivThumbnail);
 
     }
 }
