@@ -32,7 +32,7 @@ public class ArticleItemAdapter extends ArrayAdapter<NewsArticle> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        NewsArticle article = getPosition(position);
+        final NewsArticle article = getItem(position);
 
         ViewHolder viewHolder;
 
@@ -53,5 +53,6 @@ public class ArticleItemAdapter extends ArrayAdapter<NewsArticle> {
         viewHolder.tvTitle.setText(article.title);
         Glide.with(getContext()).load(article.thumbnail_url).into(viewHolder.ivThumbnail);
 
+        return convertView;
     }
 }
