@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NYTimes</string>
+    <string name="string_search">Search</string>
+    <string name="string_internet_error">Internet not available</string>
 </resources>

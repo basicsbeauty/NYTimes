@@ -1,6 +1,7 @@
 package com.enlaps.m.and.nytimes.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,46 +14,56 @@ import com.enlaps.m.and.nytimes.models.NewsArticle;
 import com.enlaps.m.and.nytimes.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vsatish on 2/12/2016.
  */
-public class ArticleItemAdapter extends ArrayAdapter<NewsArticle> {
+public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.ViewHolder> {
 
     // View Holder
-    private static class ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView     tvTitle;
         public ImageView    ivThumbnail;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            tvTitle     = (TextView)    itemView.findViewById(R.id.tvArticleTitle);
+            ivThumbnail = (ImageView)   itemView.findViewById(R.id.ivArticleThumbnail);
+
+        }
     }
 
-    public ArticleItemAdapter(Context context, ArrayList<NewsArticle> objects) {
-        super( context, 0, objects);
+    private ArrayList<NewsArticle> mListNewsArticle;
+
+
+    public ArticleItemAdapter(ArrayList<NewsArticle> objects) {
+        mListNewsArticle = objects;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        final NewsArticle article = getItem(position);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
-        ViewHolder viewHolder;
+        View article = inflater.inflate(R.layout.lv_article_item, parent, false);
 
-        if(convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.lv_article_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(article);
+        return viewHolder;
+    }
 
-            viewHolder = new ViewHolder();
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        NewsArticle article = mListNewsArticle.get(position);
 
-            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvArticleTitle);
-            viewHolder.ivThumbnail = (ImageView) convertView.findViewById(R.id.ivArticleThumbnail);
-
-            convertView.setTag(viewHolder);
-        }
-        else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-
-        viewHolder.tvTitle.setText(article.title);
+        holder.tvTitle.setText(article.title);
         Glide.with(getContext()).load(article.thumbnail_url).into(viewHolder.ivThumbnail);
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return mListNewsArticle.size();
     }
 }

@@ -7,4 +7,6 @@
     <color name="colorEnlapsRedDark">#400000</color>
     <color name="colorAccent">#FFFFFF</color>
 
+    <color name="colorWhite">#FFFFFF</color>
+
 </resources>
