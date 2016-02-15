@@ -10,11 +10,11 @@ The following **required** functionality is completed:
 
 * [x] User can **search for news article** by specifying a query and launching a search. Search displays a grid of image results from the New York Times Search API.
 * [x] User can click on "settings" which allows selection of **advanced search options** to filter results
-* [ ] User can configure advanced search filters such as:
+* [x] User can configure advanced search filters such as:
   * [x] Begin Date (using a date picker)
-  * [x] News desk values (Arts, Fashion & Style, Sports)
+  * [x] News desk values (Arts, Fashion & Style, Sports)     (Parcelable has problem deserializing List)
   * [x] Sort order (oldest or newest)
-* [ ] Subsequent searches have any filters applied to the search results
+* [x] Subsequent searches have any filters applied to the search results
 * [x] User can tap on any image in results to see the full text of article **full-screen**
 * [x] User can **scroll down to see more articles**. The maximum number of articles is limited by the API search.
 
