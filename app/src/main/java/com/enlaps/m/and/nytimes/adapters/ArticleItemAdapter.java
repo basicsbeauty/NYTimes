@@ -40,7 +40,6 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
             ivThumbnail = (ImageView)   itemView.findViewById(R.id.ivArticleThumbnail);
 
         }
-
     }
 
     private Context mContext;
@@ -90,13 +89,19 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
                 Intent i = new Intent( v.getContext(), ActivityArticle.class);
                 i.putExtra("article", currentArticle);
 
+                mContext.startActivity(i);
             }
         });
 
         holder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Position", Integer.toString(position));
+                NewsArticle currentArticle = mListNewsArticle.get(position);
+
+                Intent i = new Intent( v.getContext(), ActivityArticle.class);
+                i.putExtra("article", currentArticle);
+
+                mContext.startActivity(i);
             }
         });
 

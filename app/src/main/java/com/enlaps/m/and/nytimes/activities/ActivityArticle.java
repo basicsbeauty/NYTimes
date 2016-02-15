@@ -6,10 +6,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.enlaps.m.and.nytimes.R;
+import com.enlaps.m.and.nytimes.models.NewsArticle;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ActivityArticle extends AppCompatActivity {
+
+    @Bind(R.id.wvArticle)
+    WebView vwArticle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,15 +27,24 @@ public class ActivityArticle extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        init();
+    }
+
+    protected void init() {
+        ButterKnife.bind(this);
+
+        NewsArticle article = (NewsArticle) getIntent().getParcelableExtra("article");
+
+        vwArticle.setWebViewClient(new WebViewClient() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        vwArticle.loadUrl(article.url);
     }
 
 }
