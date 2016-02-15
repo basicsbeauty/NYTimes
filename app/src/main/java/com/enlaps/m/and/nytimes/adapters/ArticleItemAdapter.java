@@ -1,7 +1,9 @@
 package com.enlaps.m.and.nytimes.adapters;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.enlaps.m.and.nytimes.models.NewsArticle;
 import com.enlaps.m.and.nytimes.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +36,15 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
             ivThumbnail = (ImageView)   itemView.findViewById(R.id.ivArticleThumbnail);
 
         }
+
     }
 
+    private Context mContext;
     private ArrayList<NewsArticle> mListNewsArticle;
 
 
-    public ArticleItemAdapter(ArrayList<NewsArticle> objects) {
+    public ArticleItemAdapter(Context context, ArrayList<NewsArticle> objects) {
+        mContext = context;
         mListNewsArticle = objects;
     }
 
@@ -59,7 +65,12 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
         NewsArticle article = mListNewsArticle.get(position);
 
         holder.tvTitle.setText(article.title);
-        Glide.with(getContext()).load(article.thumbnail_url).into(viewHolder.ivThumbnail);
+        //Glide.with(mContext).load(article.thumbnail_url).into(holder.ivThumbnail);
+        if( (null != article.thumbnail_url)
+         && (0 < article.thumbnail_url.length())){
+            Log.d("TN Image URL", article.thumbnail_url);
+        }
+        Picasso.with(mContext).load(article.thumbnail_url).into(holder.ivThumbnail);
     }
 
     @Override

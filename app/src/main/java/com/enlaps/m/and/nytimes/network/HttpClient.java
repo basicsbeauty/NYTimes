@@ -71,7 +71,7 @@ public class HttpClient {
         JSONObject  response;
         JSONArray   jarrayDocs;
         try {
-            Log.i("Response", jsonResponse.toString());
+            //Log.i("Response", jsonResponse.toString());
             if( false == jsonResponse.has(JSON_TAG_RESPONSE)) {
                 Log.e("Response JSON Error", "No element: " + JSON_TAG_RESPONSE);
                 return new ArrayList<>();
@@ -118,6 +118,7 @@ public class HttpClient {
 
     public NewsArticle json2Article(JSONObject object) {
 
+        final String JSON_TAG_URL = "url";
         final String JSON_TAG_WEB_URL = "web_url";
         final String JSON_TAG_SNIPPET = "snippet";
 
@@ -144,18 +145,18 @@ public class HttpClient {
             JSONArray jarrayMedia = object.getJSONArray(JSON_TAG_MEDIA);
 
             int count = jarrayMedia.length();
+            Log.i("Media Count", Integer.toString(count));
+            Log.i("Media Response", jarrayMedia.toString());
             for( int i=0; i<count; i++) {
                 JSONObject jmedia = jarrayMedia.getJSONObject(i);
 
-                if( (false == jmedia.has(JSON_TAG_MEDIA_TYPE))
-                 || (false == jmedia.has(JSON_TAG_MEDIA_SUBTYPE))
-                 || (JSON_VALUE_MEDIA_TYPE_IMAGE != jmedia.getString(JSON_TAG_MEDIA_TYPE))
-                 || (JSON_VALUE_MEDIA_SUBTYPE_THUMBNAIL != jmedia.getString(JSON_TAG_MEDIA_SUBTYPE) ) ) {
-                    continue;
-                }
 
-                rarticle.thumbnail_url = URL_BASE + jmedia.getString(JSON_TAG_MEDIA_SUBTYPE);
-                break;  // Break after the first Thumbnail
+                if( ("image".equals(jmedia.getString(JSON_TAG_MEDIA_TYPE)))
+                 && ("thumbnail".equals(jmedia.getString(JSON_TAG_MEDIA_SUBTYPE))) ) {
+                    rarticle.thumbnail_url = URL_BASE + jmedia.get(JSON_TAG_URL);
+                    Log.i("Thumbnail", rarticle.thumbnail_url);
+                    break;  // Break after the first Thumbnail
+                }
             }
         }
         catch (JSONException e) {
