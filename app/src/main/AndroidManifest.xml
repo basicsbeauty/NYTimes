@@ -26,6 +26,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.enlaps.m.and.nytimes.activities.ActivityHome" />
         </activity>
+        <activity android:name=".activities.ActivitySettings"></activity>
     </application>
 
 </manifest>

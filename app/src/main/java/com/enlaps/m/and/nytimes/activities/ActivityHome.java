@@ -1,6 +1,7 @@
 package com.enlaps.m.and.nytimes.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,9 @@ public class ActivityHome extends AppCompatActivity {
     ArticleItemAdapter  articleAdapter;
 
     ArrayList<NewsArticle> articles;
+
+    // Intent result codes
+    final int INTENT_RCODE_SETTINGS=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,20 @@ public class ActivityHome extends AppCompatActivity {
 
         MenuItem miSearch = menu.findItem(R.id.miSearch);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(miSearch);
+
+        // Search Settings: Add Listener
+        MenuItem miSettings = menu.findItem(R.id.miSettings);
+
+        miSettings.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Intent i = new Intent( ActivityHome.this, ActivitySettings.class);
+                startActivityForResult(i,INTENT_RCODE_SETTINGS);
+
+                return false;
+            }
+        });
 
         // Search Item: Add Listener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

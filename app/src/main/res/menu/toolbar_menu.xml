@@ -14,7 +14,8 @@
     <item
         app:showAsAction="ifRoom|collapseActionView"
         android:id="@+id/miSettings"
-        android:icon="@drawable/ic_settings_24dp" >
+        android:icon="@drawable/ic_settings_24dp"
+        android:actionViewClass="android.support.">
     </item>
 
 </menu>
