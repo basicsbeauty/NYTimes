@@ -5,6 +5,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.enlaps.m.and.nytimes.R;
 import com.enlaps.m.and.nytimes.adapters.ArticleItemAdapter;
+import com.enlaps.m.and.nytimes.adapters.EndlessRecyclerViewScrollListener;
 import com.enlaps.m.and.nytimes.models.NewsArticle;
 import com.enlaps.m.and.nytimes.network.HttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -33,6 +35,9 @@ public class ActivityHome extends AppCompatActivity {
     @Bind(R.id.toolbar)     Toolbar toolbar;
     @Bind(R.id.rvArticles)  RecyclerView rvArticles;
 
+    int     currentPage;
+    String  currentQuery;
+
     HttpClient          httpClient;
     ArticleItemAdapter  articleAdapter;
 
@@ -46,7 +51,8 @@ public class ActivityHome extends AppCompatActivity {
         init();
         customize();
         setAdapters();
-        fetchArticles("yahoo", 0);
+        currentQuery = "yahoo";
+        fetchArticles(currentQuery, 0);
     }
 
     protected void init() {
@@ -71,7 +77,20 @@ public class ActivityHome extends AppCompatActivity {
 
         //rvArticles.setLayoutManager(new LinearLayoutManager(this));
 
-        
+        GridLayoutManager layoutManager = new GridLayoutManager( this, 4);
+
+        rvArticles.setLayoutManager(layoutManager);
+
+        rvArticles.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                currentPage = page;
+                fetchArticles( currentQuery, page);
+            }
+        });
+
+        // Item: On Click
+
 
     }
 
@@ -88,6 +107,7 @@ public class ActivityHome extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Log.i("Query", query);
 
+                currentQuery = query;
                 articles.clear();
 
                 fetchArticles(query, 0);
@@ -106,7 +126,7 @@ public class ActivityHome extends AppCompatActivity {
 
     public void fetchArticles( String query, final int pageNumber) {
 
-        httpClient.getArticles(query, new JsonHttpResponseHandler() {
+        httpClient.getArticles(query, pageNumber, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

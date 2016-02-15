@@ -27,6 +27,7 @@ public class HttpClient {
     // URL parameter tags
     private static final String URL_PARAM_TAG_QUERY = "q";
     private static final String URL_PARAM_TAG_API_KEY = "api-key";
+    private static final String URL_PARAM_TAG_PAGE_NUMBER = "page";
     private static final String URL_PARAM_TAG_API_SORT = "sort";
     private static final String URL_PARAM_TAG_API_END_DATE = "end_date";
     private static final String URL_PARAM_TAG_API_BEGIN_DATE = "begin_date";
@@ -42,14 +43,15 @@ public class HttpClient {
         this.client = new AsyncHttpClient();
     }
 
-    private String buildString( String searchString) {
+    private String buildString( String searchString, int pageNumber) {
 
         // Sample URL
         // http://api.nytimes.com/svc/search/v2/articlesearch.json?q=hitachi&api-key=8d4590c0e3f2d932247b97d3c1a612b2:9:70701775
         try {
             return  URL_SEARCH
                     + URL_PARAM_TAG_QUERY + "=" + URLEncoder.encode(searchString, "utf-8") + "&"
-                    + URL_PARAM_TAG_API_KEY + "=" + API_KEY;
+                    + URL_PARAM_TAG_API_KEY + "=" + API_KEY + "&"
+                    + URL_PARAM_TAG_PAGE_NUMBER + "=" + Integer.toString(pageNumber);
         }
         catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -57,8 +59,8 @@ public class HttpClient {
         }
     }
 
-    public void getArticles(String searchString, JsonHttpResponseHandler handler) {
-        String url =  buildString(searchString);
+    public void getArticles(String searchString, int pageNumber, JsonHttpResponseHandler handler) {
+        String url =  buildString(searchString, pageNumber);
         Log.i("URL", url);
         client.get(url, handler);
     }
@@ -152,7 +154,7 @@ public class HttpClient {
 
 
                 if( ("image".equals(jmedia.getString(JSON_TAG_MEDIA_TYPE)))
-                 && ("thumbnail".equals(jmedia.getString(JSON_TAG_MEDIA_SUBTYPE))) ) {
+                 && ("wide".equals(jmedia.getString(JSON_TAG_MEDIA_SUBTYPE))) ) {
                     rarticle.thumbnail_url = URL_BASE + jmedia.get(JSON_TAG_URL);
                     Log.i("Thumbnail", rarticle.thumbnail_url);
                     break;  // Break after the first Thumbnail
