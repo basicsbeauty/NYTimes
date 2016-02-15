@@ -9,7 +9,7 @@ Time spent: **7** hours spent in total
 The following **required** functionality is completed:
 
 * [x] User can **search for news article** by specifying a query and launching a search. Search displays a grid of image results from the New York Times Search API.
-* [ ] User can click on "settings" which allows selection of **advanced search options** to filter results
+* [x] User can click on "settings" which allows selection of **advanced search options** to filter results
 * [ ] User can configure advanced search filters such as:
   * [ ] Begin Date (using a date picker)
   * [ ] News desk values (Arts, Fashion & Style, Sports)
