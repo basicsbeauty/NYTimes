@@ -15,7 +15,7 @@ The following **required** functionality is completed:
   * [ ] News desk values (Arts, Fashion & Style, Sports)
   * [ ] Sort order (oldest or newest)
 * [ ] Subsequent searches have any filters applied to the search results
-* [ ] User can tap on any image in results to see the full text of article **full-screen**
+* [x] User can tap on any image in results to see the full text of article **full-screen**
 * [x] User can **scroll down to see more articles**. The maximum number of articles is limited by the API search.
 
 The following **optional** features are implemented:
@@ -42,7 +42,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/eOETuJT.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/mhGAONN.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
